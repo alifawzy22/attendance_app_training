@@ -49,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("فشل في تسجيل الدخول"),
-            backgroundColor: Colors.red,
+            backgroundColor: Color.fromARGB(255, 71, 37, 34),
           ),
         );
       }
