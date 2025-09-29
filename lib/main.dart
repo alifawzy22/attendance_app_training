@@ -1,4 +1,4 @@
-import 'package:attendance_app_training/home_view.dart';
+import 'package:attendance_app_training/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "حضور التدريب",
-      home: HomeView(),
+      home: LoginView(),
     );
   }
 }
