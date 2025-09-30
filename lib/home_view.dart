@@ -1,5 +1,8 @@
+import 'package:attendance_app_training/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
+
+import 'login_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -114,7 +117,13 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.blue[50],
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginView()),
+              );
+            },
             icon: Icon(Icons.logout, color: Colors.black),
           ),
         ],

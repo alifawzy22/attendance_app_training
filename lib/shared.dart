@@ -1,18 +1,12 @@
-import 'package:attendance_app_training/login_view.dart';
-import 'package:flutter/material.dart';
+import 'package:attendance_app_training/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> saveLoginState(String username) async {
+Future<void> saveLoginState() async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isLoggedIn', true);
-  await prefs.setString('username', username);
+  await prefs.setBool(Constants.isUserLoggedIn, true);
 }
 
-Future<void> logout(BuildContext context) async {
+Future<void> logout() async {
   final prefs = await SharedPreferences.getInstance();
-  await prefs.remove("isLoggedIn");
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const LoginView()),
-  );
+  await prefs.remove(Constants.isUserLoggedIn);
 }

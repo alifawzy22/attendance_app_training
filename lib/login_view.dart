@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
     final password = _passwordController.text.trim();
 
     if (username == "admin" && password == "1234") {
-      await saveLoginState(username);
+      await saveLoginState();
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -43,7 +43,12 @@ class _LoginViewState extends State<LoginView> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("فشل في تسجيل الدخول"),
+            content: Center(
+              child: Text(
+                'اسم المستخدم أو كلمة المرور غير صحيحة',
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
             backgroundColor: Colors.red,
           ),
         );
