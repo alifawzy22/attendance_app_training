@@ -71,38 +71,9 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Row(
-              children: [
-                SizedBox(width: 4),
-                Expanded(
-                  child: ListTile(
-                    title: Text("التطبيق"),
-                    subtitle: DropdownButton<String>(
-                      borderRadius: BorderRadius.circular(8),
-                      underline: Container(),
-                      value: hallNumber,
-                      hint: Text("أسم التطبيق"),
-                      items: <String>['1', '2', '3', '4', '5']
-                          .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          })
-                          .toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          appName = newValue;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(width: 4),
-                Expanded(child: ListTile()),
-                SizedBox(width: 4),
-                Expanded(child: ListTile()),
-                SizedBox(width: 4),
+            Row(children: [
+                
+                
               ],
             ),
 

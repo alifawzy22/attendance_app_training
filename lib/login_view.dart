@@ -35,14 +35,7 @@ class _LoginViewState extends State<LoginView> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeView()),
-        ).then((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("تم تسجيل الدخول بنجاح"),
-              backgroundColor: Colors.green,
-            ),
-          );
-        });
+        );
       }
     } else {
       if (mounted) {
@@ -80,14 +73,14 @@ class _LoginViewState extends State<LoginView> {
             padding: const EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
-              child: SingleChildScrollView(
+              child: Directionality(
+                textDirection: TextDirection.rtl,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Column(
-                      children: [
-                        Text(
+                  padding: const EdgeInsets.symmetric(vertical: 100),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Text(
                           "منظومة التدريب علي التطبيقات التشاركية",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -96,91 +89,96 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 250),
-                        // Username field
-                        TextFormField(
-                          controller: _usernameController,
-                          decoration: const InputDecoration(
-                            labelText: "اسم المستخدم",
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12.0),
+                      ),
+                      // Username field
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _usernameController,
+                              decoration: const InputDecoration(
+                                labelText: "اسم المستخدم",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12.0),
+                                  ),
+                                ),
+                                fillColor: Colors.white,
+                                filled: true,
                               ),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "من فضلك أدخل اسم المستخدم";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 15),
-
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: !_isPasswordVisible,
-                          decoration: InputDecoration(
-                            labelText: "كلمة المرور",
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12.0),
-                              ),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "من فضلك أدخل اسم المستخدم";
+                                }
+                                return null;
                               },
                             ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "من فضلك أدخل كلمة المرور";
-                            }
-                            return null;
-                          },
-                        ),
+                            const SizedBox(height: 15),
 
-                        const SizedBox(height: 100),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: !_isPasswordVisible,
+                              decoration: InputDecoration(
+                                labelText: "كلمة المرور",
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12.0),
+                                  ),
+                                ),
+                                fillColor: Colors.white,
+                                filled: true,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "من فضلك أدخل كلمة المرور";
+                                }
+                                return null;
+                              },
+                            ),
 
-                        // Login button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                Colors.indigo,
+                            const SizedBox(height: 50),
+
+                            // Login button
+                            SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Colors.indigo,
+                                  ),
+                                ),
+                                onPressed: _isLoading ? null : _login,
+                                child: _isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                    : const Text(
+                                        "دخول",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                               ),
                             ),
-                            onPressed: _isLoading ? null : _login,
-                            child: _isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : const Text(
-                                    "دخول",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
