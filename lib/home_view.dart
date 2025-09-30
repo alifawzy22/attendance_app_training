@@ -12,7 +12,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   String? hallNumber;
   String? appName;
-  String? date;
+  String? trainingNumber;
+  DateTime? fromDate;
+  DateTime? toDate;
 
   final List<TableItem> _tableItems = [
     TableItem(
@@ -71,12 +73,326 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Row(children: [
-                
-                
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'التطبيق',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'رقم القاعة',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'رقم الدورة',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
               ],
             ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 35,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: Container(),
+                    value: hallNumber,
+                    items: [
+                      DropdownMenuItem(
+                        value: '1',
 
+                        alignment: Alignment.center,
+                        child: Text(
+                          '1',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: '2',
+                        alignment: Alignment.center,
+                        child: Text(
+                          '2',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: '3',
+                        alignment: Alignment.center,
+                        child: Text(
+                          '3',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      hallNumber = value;
+                      setState(() {});
+                    },
+                  ),
+                ),
+
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 35,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: Container(),
+                    value: appName,
+                    items: [
+                      DropdownMenuItem(
+                        value: 'PM',
+
+                        alignment: Alignment.center,
+                        child: Text(
+                          'PM',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'CM',
+                        alignment: Alignment.center,
+                        child: Text(
+                          'CM',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'HR',
+                        alignment: Alignment.center,
+                        child: Text(
+                          'HR',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      appName = value;
+                      setState(() {});
+                    },
+                  ),
+                ),
+
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 35,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: Container(),
+                    value: trainingNumber,
+                    items: [
+                      DropdownMenuItem(
+                        value: '1',
+
+                        alignment: Alignment.center,
+                        child: Text(
+                          '1',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: '2',
+                        alignment: Alignment.center,
+                        child: Text(
+                          '2',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: '3',
+                        alignment: Alignment.center,
+                        child: Text(
+                          '3',
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      trainingNumber = value;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'إلي',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'من',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // to Date
+                GestureDetector(
+                  onTap: () async {
+                    await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 365)),
+                      helpText: 'أختر التاريخ',
+                      cancelText: 'إلغاء',
+                      confirmText: 'موافق',
+                      fieldHintText: 'شهر/يوم/سنة',
+                      fieldLabelText: 'تاريخ',
+                      initialDatePickerMode: DatePickerMode.day,
+                      initialEntryMode: DatePickerEntryMode.calendar,
+                      selectableDayPredicate: (day) {
+                        // Disable weekends (Saturday and Sunday)
+                        if (day.weekday == DateTime.friday ||
+                            day.weekday == DateTime.saturday) {
+                          return false;
+                        }
+                        return true;
+                      },
+                    ).then((value) {
+                      toDate = value;
+                      setState(() {});
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300, width: 1),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          intl.DateFormat(
+                            'yyyy-MM-dd',
+                          ).format(toDate ?? DateTime.now()),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                        CalenderIconButton(
+                          valueChange: (value) {
+                            toDate = value;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                //From date
+                GestureDetector(
+                  onTap: () async {
+                    await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 365)),
+                      helpText: 'أختر التاريخ',
+                      cancelText: 'إلغاء',
+                      confirmText: 'موافق',
+                      fieldHintText: 'شهر/يوم/سنة',
+                      fieldLabelText: 'تاريخ',
+                      initialDatePickerMode: DatePickerMode.day,
+                      initialEntryMode: DatePickerEntryMode.calendar,
+                      selectableDayPredicate: (day) {
+                        // Disable weekends (Saturday and Sunday)
+                        if (day.weekday == DateTime.friday ||
+                            day.weekday == DateTime.saturday) {
+                          return false;
+                        }
+                        return true;
+                      },
+                    ).then((value) {
+                      fromDate = value;
+                      setState(() {});
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300, width: 1),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          intl.DateFormat(
+                            'yyyy-MM-dd',
+                          ).format(fromDate ?? DateTime.now()),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                        CalenderIconButton(
+                          valueChange: (value) {
+                            fromDate = value;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
             // Table
             Directionality(
               textDirection: TextDirection.rtl,
@@ -329,6 +645,44 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CalenderIconButton extends StatelessWidget {
+  final ValueChanged<DateTime?>? valueChange;
+  const CalenderIconButton({super.key, this.valueChange});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      padding: EdgeInsets.zero,
+      onPressed: () async {
+        await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(Duration(days: 365)),
+          helpText: 'أختر التاريخ',
+          cancelText: 'إلغاء',
+          confirmText: 'موافق',
+          fieldHintText: 'شهر/يوم/سنة',
+          fieldLabelText: 'تاريخ',
+          initialDatePickerMode: DatePickerMode.day,
+          initialEntryMode: DatePickerEntryMode.calendar,
+          selectableDayPredicate: (day) {
+            // Disable weekends (Saturday and Sunday)
+            if (day.weekday == DateTime.friday ||
+                day.weekday == DateTime.saturday) {
+              return false;
+            }
+            return true;
+          },
+        ).then((value) {
+          valueChange?.call(value);
+        });
+      },
+      icon: Icon(Icons.calendar_month),
     );
   }
 }
