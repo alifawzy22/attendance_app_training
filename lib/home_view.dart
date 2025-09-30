@@ -1,4 +1,3 @@
-import 'package:attendance_app_training/table_item.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -16,43 +15,88 @@ class _HomeViewState extends State<HomeView> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  final List<TableItem> _tableItems = [
-    TableItem(
-      trainingNumber: 1,
-      hallNumber: 1,
-      name: 'ahmed',
-      ministryName: 'وزارة النقل',
-      partyName: 'النقل',
-      appName: 'PM',
-      nationalId: "123457865555",
-      morningPeroid: true,
-      eveningPeroid: true,
-    ),
+  // Column names and visibility
+  final Map<String, bool> _columnVisibility = {
+    'م': true,
+    'رقم الدورة': true,
+    'رقم القاعة': true,
+    'الأسم': true,
+    'الوزارة': true,
+    'الجهة': true,
+    'الرقم القومي': true,
+    'فترة أولي': true,
+    'فترة ثانية': true,
+  };
 
-    TableItem(
-      trainingNumber: 1,
-      hallNumber: 1,
-      name: 'ahmed',
-      ministryName: 'وزارة النقل',
-      partyName: 'النقل',
-      appName: 'PM',
-      nationalId: "78578878778",
-      morningPeroid: true,
-      eveningPeroid: false,
-    ),
-
-    TableItem(
-      trainingNumber: 1,
-      hallNumber: 1,
-      name: 'ahmed',
-      ministryName: 'وزارة الثقافة',
-      partyName: 'الثقافة',
-      appName: 'CM',
-      nationalId: "89454588765787",
-      morningPeroid: false,
-      eveningPeroid: true,
-    ),
+  // Example table data
+  final List<Map<String, dynamic>> _tableItems = [
+    {
+      'trainingNumber': 101,
+      'hallNumber': 5,
+      'name': 'محمد علي',
+      'ministryName': 'وزارة التعليم',
+      'partyName': 'جهة التدريب',
+      'nationalId': '123456789',
+      'morningPeriod': true,
+      'eveningPeriod': false,
+    },
+    {
+      'trainingNumber': 202,
+      'hallNumber': 10,
+      'name': 'أحمد حسن',
+      'ministryName': 'وزارة الصحة',
+      'partyName': 'مركز التدريب',
+      'nationalId': '987654321',
+      'morningPeriod': false,
+      'eveningPeriod': true,
+    },
   ];
+
+  void _openColumnSelector() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setStateDialog) {
+            return AlertDialog(
+              title: Center(
+                child: Text(
+                  'إختيار الأعمدة',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  children: _columnVisibility.keys.map((column) {
+                    return column == 'م'
+                        ? Container()
+                        : CheckboxListTile(
+                            value: _columnVisibility[column],
+                            title: Text(column),
+                            onChanged: (value) {
+                              // Update both dialog state and main widget state
+                              setStateDialog(() {
+                                _columnVisibility[column] = value ?? true;
+                              });
+                              setState(() {}); // rebuild the table as well
+                            },
+                          );
+                  }).toList(),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('إغلاق'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +106,24 @@ class _HomeViewState extends State<HomeView> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w400,
           ),
         ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.blue[50],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.logout, color: Colors.black),
+          ),
+        ],
+        leading: IconButton(
+          onPressed: () {
+            _openColumnSelector();
+          },
+          icon: Icon(Icons.remove_red_eye_rounded, color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -309,7 +365,7 @@ class _HomeViewState extends State<HomeView> {
                     });
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       color: Colors.blue[50],
@@ -364,7 +420,7 @@ class _HomeViewState extends State<HomeView> {
                     });
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       color: Colors.blue[50],
@@ -396,229 +452,128 @@ class _HomeViewState extends State<HomeView> {
             // Table
             Directionality(
               textDirection: TextDirection.rtl,
-              child: Column(
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        border: TableBorder.all(
-                          color: Colors.grey.shade300,
-                          width: 1,
-                        ),
-                        columnSpacing: 30,
-                        horizontalMargin: 10,
-                        dividerThickness: 1,
-                        dataRowMaxHeight: 60,
-                        headingRowColor:
-                            WidgetStateProperty.resolveWith<Color?>(
-                              (Set<WidgetState> states) => Colors.blue[50],
-                            ),
-                        columns: const [
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'م',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            numeric: true,
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'رقم الدورة',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            numeric: true,
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'رقم القاعة',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            numeric: true,
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'الأسم',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'الوزارة',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'الجهة',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'الرقم القومي',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            numeric: true,
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'فترة أولي',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            headingRowAlignment: MainAxisAlignment.center,
-                            label: Text(
-                              'فترة ثانية',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ],
-                        rows: _tableItems.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final item = entry.value;
-
-                          return DataRow(
-                            color: WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              // Zebra striping for better readability
-                              return index.isEven ? Colors.blueGrey[100] : null;
-                            }),
-                            cells: [
-                              // Column 1: Index (based on list position)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              // Column 2: ID (Number)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    item.trainingNumber.toString(),
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              // Column 3: Price (Number)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    '${item.hallNumber}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              // Column 4: Name (String)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    item.name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              // Column 5: Category (String)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    item.ministryName,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              // Column 6: Description (String)
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    item.partyName,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              DataCell(
-                                Center(
-                                  child: Text(
-                                    item.nationalId,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-
-                              DataCell(
-                                Checkbox(
-                                  value: item.morningPeroid,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      item.morningPeroid = value ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-
-                              DataCell(
-                                Checkbox(
-                                  value: item.eveningPeroid,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      item.eveningPeroid = value ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    border: TableBorder.all(
+                      color: Colors.grey.shade300,
+                      width: 1,
                     ),
+                    columnSpacing: 30,
+                    horizontalMargin: 10,
+                    dividerThickness: 1,
+                    dataRowMaxHeight: 60,
+                    headingRowColor: WidgetStateProperty.resolveWith<Color?>(
+                      (Set<WidgetState> states) => Colors.blue[50],
+                    ),
+                    columns: [
+                      if (_columnVisibility['م']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('م'),
+                          numeric: true,
+                        ),
+                      if (_columnVisibility['رقم الدورة']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('رقم الدورة'),
+                        ),
+                      if (_columnVisibility['رقم القاعة']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('رقم القاعة'),
+                        ),
+                      if (_columnVisibility['الأسم']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('الأسم'),
+                        ),
+                      if (_columnVisibility['الوزارة']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('الوزارة'),
+                        ),
+                      if (_columnVisibility['الجهة']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('الجهة'),
+                        ),
+                      if (_columnVisibility['الرقم القومي']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('الرقم القومي'),
+                        ),
+                      if (_columnVisibility['فترة أولي']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('فترة أولي'),
+                        ),
+                      if (_columnVisibility['فترة ثانية']!)
+                        const DataColumn(
+                          headingRowAlignment: MainAxisAlignment.center,
+                          label: Text('فترة ثانية'),
+                        ),
+                    ],
+                    rows: _tableItems.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final item = entry.value;
+
+                      return DataRow(
+                        color: WidgetStateProperty.resolveWith<Color?>((
+                          Set<WidgetState> states,
+                        ) {
+                          return index.isEven ? Colors.blueGrey[100] : null;
+                        }),
+                        cells: [
+                          if (_columnVisibility['م']!)
+                            DataCell(Center(child: Text('${index + 1}'))),
+                          if (_columnVisibility['رقم الدورة']!)
+                            DataCell(
+                              Center(child: Text('${item['trainingNumber']}')),
+                            ),
+                          if (_columnVisibility['رقم القاعة']!)
+                            DataCell(
+                              Center(child: Text('${item['hallNumber']}')),
+                            ),
+                          if (_columnVisibility['الأسم']!)
+                            DataCell(Center(child: Text(item['name']))),
+                          if (_columnVisibility['الوزارة']!)
+                            DataCell(Center(child: Text(item['ministryName']))),
+                          if (_columnVisibility['الجهة']!)
+                            DataCell(Center(child: Text(item['partyName']))),
+                          if (_columnVisibility['الرقم القومي']!)
+                            DataCell(Center(child: Text(item['nationalId']))),
+                          if (_columnVisibility['فترة أولي']!)
+                            DataCell(
+                              Checkbox(
+                                value: item['morningPeriod'],
+                                onChanged: (val) {
+                                  setState(() {
+                                    item['morningPeriod'] = val!;
+                                  });
+                                },
+                              ),
+                            ),
+                          if (_columnVisibility['فترة ثانية']!)
+                            DataCell(
+                              Checkbox(
+                                value: item['eveningPeriod'],
+                                onChanged: (val) {
+                                  setState(() {
+                                    item['eveningPeriod'] = val!;
+                                  });
+                                },
+                              ),
+                            ),
+                        ],
+                      );
+                    }).toList(),
                   ),
-                ],
+                ),
               ),
             ),
-
             SizedBox(height: 20),
 
             Center(
@@ -627,18 +582,17 @@ class _HomeViewState extends State<HomeView> {
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 64, vertical: 4),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.3,
+                    vertical: 4,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: Text(
                   'حفظ',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
