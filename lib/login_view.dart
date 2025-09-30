@@ -1,4 +1,5 @@
 import 'package:attendance_app_training/home_view.dart';
+import 'package:attendance_app_training/shared.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -31,6 +32,7 @@ class _LoginViewState extends State<LoginView> {
     final password = _passwordController.text.trim();
 
     if (username == "admin" && password == "1234") {
+      await saveLoginState(username);
       if (mounted) {
         Navigator.pushReplacement(
           context,
