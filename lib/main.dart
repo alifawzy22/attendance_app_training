@@ -1,12 +1,14 @@
 import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'shared.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  // جلب التوكين من SharedPreferences
+  final token = await getAccessToken();
+  final bool isLoggedIn = token != null && token.isNotEmpty;
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
