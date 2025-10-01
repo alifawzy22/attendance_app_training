@@ -29,13 +29,10 @@ class _LoginViewState extends State<LoginView> {
     final password = _passwordController.text.trim();
 
     try {
-      final loginResponse = await _authService.login(username, password);
+      final loginModel = await _authService.login(username, password);
 
-      if (loginResponse != null && loginResponse.accessToken.isNotEmpty) {
-        await saveLoginState(
-          loginResponse.accessToken,
-          loginResponse.refreshToken,
-        );
+      if (loginModel != null && loginModel.accessToken.isNotEmpty) {
+        await saveLoginState(loginModel.accessToken, loginModel.refreshToken);
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
