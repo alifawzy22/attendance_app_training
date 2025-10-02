@@ -40,7 +40,7 @@ class HomeService {
     bool? night,
     int? attendacePeriod,
   }) async {
-    final path = Constants.checkBoxAttendanceUrl;
+    final path = '${Constants.baseUrl}${Constants.checkBoxAttendanceUrl}';
 
     final Map<String, dynamic> body = {
       "id": id,
