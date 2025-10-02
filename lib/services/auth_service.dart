@@ -8,7 +8,7 @@ class AuthService {
   Future<LoginModel?> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        Constants.authUrl,
+        '${Constants.baseUrl}${Constants.authUrl}',
         data: {"email": email, "password": password},
         options: Options(headers: {"Content-Type": "application/json"}),
       );
