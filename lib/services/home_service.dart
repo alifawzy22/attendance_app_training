@@ -19,15 +19,18 @@ class HomeService {
   // Get DropDowns Data
   Future<DropDownsModel?> getDropDownsData() async {
     try {
-      final response = await _dio.get(Constants.dropDownsUrl);
+      final response = await _dio.get(
+        '${Constants.baseUrl}${Constants.dropDownsUrl}',
+      );
 
       if (response.statusCode == 200 && response.data['success'] == true) {
         return DropDownsModel.fromJson(response.data);
+      } else {
+        return null;
       }
     } catch (e) {
-      print("Drop Downs Data Error: $e");
+      return null;
     }
-    return null;
   }
 
   //  Update Attendance
