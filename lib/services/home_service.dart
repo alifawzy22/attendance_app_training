@@ -1,6 +1,8 @@
 import 'package:attendance_app_training/constants.dart';
+import 'package:attendance_app_training/models/drop_down_changed_model.dart';
 import 'package:attendance_app_training/models/drop_downs_model.dart';
 import 'package:attendance_app_training/models/check_box_attendance_model.dart';
+import 'package:attendance_app_training/models/filter_data_model.dart';
 import 'package:dio/dio.dart';
 
 class HomeService {
@@ -15,6 +17,32 @@ class HomeService {
               headers: {'Content-Type': 'application/json'},
             ),
           );
+
+  // Update  Data table
+  Future<List<FilterDataModel>> updateDataTable({
+    required DropDownChangedModel? dropDownChangedModel,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '${Constants.baseUrl}${Constants.updateDataTable}',
+        queryParameters: dropDownChangedModel == null
+            ? {}
+            : dropDownChangedModel.tojson(),
+      );
+
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return (response.data['data'] as List).isEmpty
+            ? []
+            : (response.data['data'] as List)
+                  .map((item) => FilterDataModel.fromJson(item))
+                  .toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
 
   // Get DropDowns Data
   Future<DropDownsModel?> getDropDownsData() async {
@@ -33,52 +61,23 @@ class HomeService {
     }
   }
 
-  //  Update Attendance
-  Future<List<CheckBoxAttendanceModel>> updateAttendance({
-    required String id,
-    bool? morning,
-    bool? night,
-    int? attendacePeriod,
+  // Update Attendance
+  Future<bool> updateAttendance({
+    required List<Map<String, dynamic>> checkBoxAttendanceList,
   }) async {
-    final path = '${Constants.baseUrl}${Constants.checkBoxAttendanceUrl}';
-
-    final Map<String, dynamic> body = {
-      "id": id,
-      if (morning != null) "morningattendacePeriod": morning,
-      if (night != null) "nightattendacePeriod": night,
-      if (attendacePeriod != null) "attendacePeriod": attendacePeriod,
-    };
-
     try {
-      final response = await _dio.put(path, data: body);
+      final response = await _dio.put(
+        '${Constants.baseUrl}${Constants.checkBoxAttendanceUrl}',
+        data: checkBoxAttendanceList,
+      );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-
-        if (data is List) {
-          return data
-              .map<CheckBoxAttendanceModel>(
-                (e) => CheckBoxAttendanceModel.fromJson(e),
-              )
-              .toList();
-        } else {
-          throw Exception("Unexpected response format: $data");
-        }
+        return true;
       } else {
-        throw Exception(
-          "Unexpected status code: ${response.statusCode}, data: ${response.data}",
-        );
+        return false;
       }
-    } on DioException catch (e) {
-      print('DioException: ${e.message}');
-      if (e.response != null) {
-        print('Status: ${e.response?.statusCode}');
-        print('Data: ${e.response?.data}');
-      }
-      rethrow;
     } catch (e) {
-      print('Unknown error: $e');
-      rethrow;
+      return false;
     }
   }
 }

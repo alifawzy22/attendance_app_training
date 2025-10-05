@@ -8,4 +8,6 @@ class Constants {
       "TrainingRegistrations/LookupsForDropdowns";
   static const String checkBoxAttendanceUrl =
       "TrainingRegistrations/UpdateAttendance";
+
+  static const String updateDataTable = 'TrainingRegistrations/All';
 }
