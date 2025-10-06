@@ -1,15 +1,25 @@
+import 'dart:io';
+
 import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/login_view.dart';
 import 'package:flutter/material.dart';
 import 'shared.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // جلب التوكين من SharedPreferences
   final token = await getAccessToken();
   final bool isLoggedIn = token != null && token.isNotEmpty;
-
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 

@@ -56,6 +56,8 @@ class _LoginViewState extends State<LoginView> {
             content: Center(
               child: Text(
                 "فشل تسجيل الدخول: يرجي التأكد من الإيميل أو كلمه المرور ",
+                style: TextStyle(fontSize: 12),
+                textAlign: TextAlign.center,
               ),
             ),
             backgroundColor: Colors.red,

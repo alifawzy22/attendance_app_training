@@ -254,6 +254,7 @@ class _HomeViewState extends State<HomeView> {
                           }).toList(),
                           onChanged: (value) {
                             appName = value;
+                            setState(() {});
                             HomeService(dio: Dio())
                                 .updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
@@ -273,8 +274,8 @@ class _HomeViewState extends State<HomeView> {
                                 .then((model) {
                                   tableList = [];
                                   tableList = model;
+                                  setState(() {});
                                 });
-                            setState(() {});
                           },
                         ),
                       ),
@@ -315,6 +316,7 @@ class _HomeViewState extends State<HomeView> {
                           }).toList(),
                           onChanged: (value) {
                             hallNumber = value;
+                            setState(() {});
                             HomeService(dio: Dio())
                                 .updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
@@ -334,8 +336,8 @@ class _HomeViewState extends State<HomeView> {
                                 .then((model) {
                                   tableList = [];
                                   tableList = model;
+                                  setState(() {});
                                 });
-                            setState(() {});
                           },
                         ),
                       ),
@@ -376,6 +378,7 @@ class _HomeViewState extends State<HomeView> {
                           }).toList(),
                           onChanged: (value) {
                             trainingNumber = value;
+                            setState(() {});
                             HomeService(dio: Dio())
                                 .updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
@@ -395,8 +398,8 @@ class _HomeViewState extends State<HomeView> {
                                 .then((model) {
                                   tableList = [];
                                   tableList = model;
+                                  setState(() {});
                                 });
-                            setState(() {});
                           },
                         ),
                       ),
@@ -461,6 +464,7 @@ class _HomeViewState extends State<HomeView> {
                             },
                           ).then((value) {
                             toDate = value;
+                            setState(() {});
                             HomeService(dio: Dio())
                                 .updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
@@ -480,8 +484,8 @@ class _HomeViewState extends State<HomeView> {
                                 .then((model) {
                                   tableList = [];
                                   tableList = model;
+                                  setState(() {});
                                 });
-                            setState(() {});
                           });
                         },
                         child: Container(
@@ -499,9 +503,11 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                intl.DateFormat(
-                                  'yyyy-MM-dd',
-                                ).format(toDate ?? DateTime.now()),
+                                toDate == null
+                                    ? 'اختر التاريخ'
+                                    : intl.DateFormat(
+                                        'yyyy-MM-dd',
+                                      ).format(toDate!),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.black,
@@ -542,6 +548,7 @@ class _HomeViewState extends State<HomeView> {
                             },
                           ).then((value) {
                             fromDate = value;
+                            setState(() {});
                             HomeService(dio: Dio())
                                 .updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
@@ -561,8 +568,8 @@ class _HomeViewState extends State<HomeView> {
                                 .then((model) {
                                   tableList = [];
                                   tableList = model;
+                                  setState(() {});
                                 });
-                            setState(() {});
                           });
                         },
                         child: Container(
@@ -580,9 +587,11 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                intl.DateFormat(
-                                  'yyyy-MM-dd',
-                                ).format(fromDate ?? DateTime.now()),
+                                fromDate == null
+                                    ? 'اختر التاريخ'
+                                    : intl.DateFormat(
+                                        'yyyy-MM-dd',
+                                      ).format(fromDate!),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.black,
