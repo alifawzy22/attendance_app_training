@@ -489,7 +489,7 @@ class _HomeViewState extends State<HomeView> {
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.45,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.blue[50],
@@ -525,6 +525,40 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ],
                           ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            fromDate = null;
+                            toDate = null;
+                          });
+                          HomeService(dio: Dio())
+                              .updateDataTable(
+                                dropDownChangedModel: DropDownChangedModel(
+                                  applicationSystem: appName == 'الكل'
+                                      ? null
+                                      : appName,
+                                  traninigHall: hallNumber == 'الكل'
+                                      ? null
+                                      : hallNumber,
+                                  courseNumber: trainingNumber == 'الكل'
+                                      ? null
+                                      : trainingNumber,
+                                  fromDate: fromDate,
+                                  toDate: toDate,
+                                ),
+                              )
+                              .then((model) {
+                                tableList = [];
+                                tableList = model;
+                                setState(() {});
+                              });
+                        },
+                        icon: Icon(
+                          Icons.event_repeat_outlined,
+                          size: 26,
+                          color: const Color.fromARGB(255, 124, 60, 55),
                         ),
                       ),
                       //From date
@@ -577,7 +611,7 @@ class _HomeViewState extends State<HomeView> {
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.45,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.blue[50],
