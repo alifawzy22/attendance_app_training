@@ -502,15 +502,19 @@ class _HomeViewState extends State<HomeView> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                toDate == null
-                                    ? 'اختر التاريخ'
-                                    : intl.DateFormat(
-                                        'yyyy-MM-dd',
-                                      ).format(toDate!),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    toDate == null
+                                        ? 'اختر التاريخ'
+                                        : intl.DateFormat(
+                                            'yyyy-MM-dd',
+                                          ).format(toDate!),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
                               ),
                               CalenderIconButton(
@@ -586,15 +590,19 @@ class _HomeViewState extends State<HomeView> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                fromDate == null
-                                    ? 'اختر التاريخ'
-                                    : intl.DateFormat(
-                                        'yyyy-MM-dd',
-                                      ).format(fromDate!),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    fromDate == null
+                                        ? 'اختر التاريخ'
+                                        : intl.DateFormat(
+                                            'yyyy-MM-dd',
+                                          ).format(fromDate!),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
                               ),
                               CalenderIconButton(
