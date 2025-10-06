@@ -120,10 +120,8 @@ class _HomeViewState extends State<HomeView> {
         ).updateDataTable(dropDownChangedModel: null).then((model) {
           tableList = [];
           tableList = model;
-        });
-
-        setState(() {
           isDropDwonsAdndTableLoading = false;
+          setState(() {});
         });
       } else {
         setState(() {

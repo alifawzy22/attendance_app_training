@@ -18,13 +18,7 @@ class AuthService {
       } else {
         throw Exception("خطأ في تسجيل الدخول: ${response.statusCode}");
       }
-    } on DioException catch (e) {
-      print("Dio Error: ${e.message}");
-      print("Unexpected Status Code: ${e.response?.statusCode}");
-
-      rethrow;
     } catch (e) {
-      print("Unexpected Error: $e");
       rethrow;
     }
   }

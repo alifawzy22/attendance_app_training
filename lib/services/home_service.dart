@@ -1,7 +1,6 @@
 import 'package:attendance_app_training/constants.dart';
 import 'package:attendance_app_training/models/drop_down_changed_model.dart';
 import 'package:attendance_app_training/models/drop_downs_model.dart';
-import 'package:attendance_app_training/models/check_box_attendance_model.dart';
 import 'package:attendance_app_training/models/filter_data_model.dart';
 import 'package:dio/dio.dart';
 
