@@ -7,6 +7,7 @@ class FilterDataModel {
   final String nationalId;
   bool firstPeriod;
   bool secondPeriod;
+  String notes;
 
   FilterDataModel({
     required this.trainingNumber,
@@ -17,6 +18,7 @@ class FilterDataModel {
     required this.nationalId,
     required this.firstPeriod,
     required this.secondPeriod,
+    required this.notes,
   });
 
   factory FilterDataModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class FilterDataModel {
       nationalId: json['nationalId'] as String? ?? '',
       firstPeriod: json['morningattendacePeriod'] as bool? ?? false,
       secondPeriod: json['nightattendacePeriod'] as bool? ?? false,
+      notes: json['notes'] as String? ?? '',
     );
   }
 
@@ -46,6 +49,7 @@ class FilterDataModel {
       "nationalId": nationalId,
       "firstPeriod": firstPeriod,
       "secondPeriod": secondPeriod,
+      "notes": notes,
     };
   }
 }
