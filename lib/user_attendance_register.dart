@@ -1,3 +1,4 @@
+import 'package:attendance_app_training/models/attendance_model.dart';
 import 'package:attendance_app_training/models/filter_data_model.dart';
 import 'package:attendance_app_training/services/home_service.dart';
 import 'package:attendance_app_training/shared.dart';
@@ -25,7 +26,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
 
   bool isDropDwonsAdndTableLoading = true;
   bool isDropDwonsEmpty = false;
-  List<FilterDataModel> tableList = [];
+  List<AttendanceModel> tableList = [];
   bool isUpdateAttendanceLoading = false;
 
   //List<Map<String, TextEditingController>> controllers = [];
@@ -236,29 +237,6 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                           onChanged: (value) {
                             hallNumber = value;
                             setState(() {});
-                            /*
-                            HomeService(dio: Dio())
-                                .updateDataTable(
-                                  dropDownChangedModel: DropDownChangedModel(
-                                    applicationSystem: appName == 'الكل'
-                                        ? null
-                                        : appName,
-                                    traninigHall: hallNumber == 'الكل'
-                                        ? null
-                                        : hallNumber,
-                                    courseNumber: trainingNumber == 'الكل'
-                                        ? null
-                                        : trainingNumber,
-                                    fromDate: fromDate,
-                                    toDate: toDate,
-                                  ),
-                                )
-                                .then((model) {
-                                  tableList = [];
-                                  tableList = model;
-                                  setState(() {});
-                                });
-                                */
                           },
                         ),
                       ),
@@ -300,29 +278,6 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                           onChanged: (value) {
                             trainingNumber = value;
                             setState(() {});
-                            /*
-                            HomeService(dio: Dio())
-                                .updateDataTable(
-                                  dropDownChangedModel: DropDownChangedModel(
-                                    applicationSystem: appName == 'الكل'
-                                        ? null
-                                        : appName,
-                                    traninigHall: hallNumber == 'الكل'
-                                        ? null
-                                        : hallNumber,
-                                    courseNumber: trainingNumber == 'الكل'
-                                        ? null
-                                        : trainingNumber,
-                                    fromDate: fromDate,
-                                    toDate: toDate,
-                                  ),
-                                )
-                                .then((model) {
-                                  tableList = [];
-                                  tableList = model;
-                                  setState(() {});
-                                });
-                                */
                           },
                         ),
                       ),
@@ -366,38 +321,58 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                   ),
                                 ),
                                 onPressed: () async {
-                                  setState(() {
-                                    isSearchLoading = true;
-                                  });
-                                  HomeService(dio: Dio())
-                                      .updateDataTable(
-                                        dropDownChangedModel:
-                                            DropDownChangedModel(
-                                              applicationSystem: appName,
-                                              traninigHall: hallNumber,
-                                              courseNumber: trainingNumber,
-                                              fromDate: null,
-                                              toDate: null,
+                                  if (hallNumber == null ||
+                                      trainingNumber == null ||
+                                      appName == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Center(
+                                          child: Text(
+                                            "يرجى تحديد جميع الحقول",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14,
                                             ),
-                                      )
-                                      .then((model) {
-                                        tableList = [];
-                                        tableList = model;
-                                        isSearchLoading = false;
-                                        // Fill Controllers List
-                                        // controllers = [];
-                                        // for (
-                                        //   int i = 0;
-                                        //   i < tableList.length;
-                                        //   i++
-                                        // ) {
-                                        //   controllers.add({
-                                        //     tableList[i].nationalId:
-                                        //         TextEditingController(),
-                                        //   });
-                                        // }
-                                        setState(() {});
-                                      });
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  } else {
+                                    setState(() {
+                                      isSearchLoading = true;
+                                    });
+
+                                    HomeService(dio: Dio())
+                                        .getAttandance(
+                                          dropDownChangedModel:
+                                              DropDownChangedModel(
+                                                traninigHall: hallNumber,
+                                                courseNumber: trainingNumber,
+                                                applicationSystem: appName,
+                                                fromDate: null,
+                                                toDate: null,
+                                              ),
+                                        )
+                                        .then((model) {
+                                          tableList = [];
+                                          tableList = model;
+                                          isSearchLoading = false;
+                                          // Fill Controllers List
+                                          // controllers = [];
+                                          // for (
+                                          //   int i = 0;
+                                          //   i < tableList.length;
+                                          //   i++
+                                          // ) {
+                                          //   controllers.add({
+                                          //     tableList[i].nationalId:
+                                          //         TextEditingController(),
+                                          //   });
+                                          // }
+                                          setState(() {});
+                                        });
+                                  }
                                 },
                                 child: Text(
                                   'بحث',
@@ -442,29 +417,6 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                           onChanged: (value) {
                             appName = value;
                             setState(() {});
-                            /*
-                            HomeService(dio: Dio())
-                                .updateDataTable(
-                                  dropDownChangedModel: DropDownChangedModel(
-                                    applicationSystem: appName == 'الكل'
-                                        ? null
-                                        : appName,
-                                    traninigHall: hallNumber == 'الكل'
-                                        ? null
-                                        : hallNumber,
-                                    courseNumber: trainingNumber == 'الكل'
-                                        ? null
-                                        : trainingNumber,
-                                    fromDate: fromDate,
-                                    toDate: toDate,
-                                  ),
-                                )
-                                .then((model) {
-                                  tableList = [];
-                                  tableList = model;
-                                  setState(() {});
-                                });
-                                */
                           },
                         ),
                       ),

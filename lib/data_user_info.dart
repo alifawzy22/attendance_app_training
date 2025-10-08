@@ -41,6 +41,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
     'الرقم القومي': true,
     'فترة أولي': true,
     'فترة ثانية': true,
+    'ملاحظات': true,
   };
 
   void _openColumnSelector() {
@@ -440,7 +441,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                       // to Date
                       GestureDetector(
                         onTap: () async {
-                          await showDatePicker(
+                          DateTime? date = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2000, 1, 1),
@@ -460,11 +461,13 @@ class _UserDataInfoState extends State<UserDataInfo> {
                               }
                               return true;
                             },
-                          ).then((value) {
-                            toDate = value;
+                          );
+                          if (date != null) {
+                            toDate = date;
                             setState(() {});
-                            HomeService(dio: Dio())
-                                .updateDataTable(
+
+                            List<FilterDataModel> filterDataList =
+                                await HomeService(dio: Dio()).updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
                                     applicationSystem: appName == 'الكل'
                                         ? null
@@ -478,13 +481,12 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                     fromDate: fromDate,
                                     toDate: toDate,
                                   ),
-                                )
-                                .then((model) {
-                                  tableList = [];
-                                  tableList = model;
-                                  setState(() {});
-                                });
-                          });
+                                );
+
+                            tableList = [];
+                            tableList = filterDataList;
+                            setState(() {});
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.40,
@@ -562,7 +564,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                       //From date
                       GestureDetector(
                         onTap: () async {
-                          await showDatePicker(
+                          DateTime? date = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2000, 1, 1),
@@ -582,11 +584,13 @@ class _UserDataInfoState extends State<UserDataInfo> {
                               }
                               return true;
                             },
-                          ).then((value) {
-                            fromDate = value;
+                          );
+                          if (date != null) {
+                            fromDate = date;
                             setState(() {});
-                            HomeService(dio: Dio())
-                                .updateDataTable(
+
+                            List<FilterDataModel> filterDataList =
+                                await HomeService(dio: Dio()).updateDataTable(
                                   dropDownChangedModel: DropDownChangedModel(
                                     applicationSystem: appName == 'الكل'
                                         ? null
@@ -600,13 +604,12 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                     fromDate: fromDate,
                                     toDate: toDate,
                                   ),
-                                )
-                                .then((model) {
-                                  tableList = [];
-                                  tableList = model;
-                                  setState(() {});
-                                });
-                          });
+                                );
+
+                            tableList = [];
+                            tableList = filterDataList;
+                            setState(() {});
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.40,
@@ -737,6 +740,13 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                           MainAxisAlignment.center,
                                       label: Text('فترة ثانية'),
                                     ),
+
+                                  if (_columnVisibility['ملاحظات']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('ملاحظات'),
+                                    ),
                                 ],
                                 rows: tableList.asMap().entries.map((entry) {
                                   final index = entry.key;
@@ -812,6 +822,10 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                             //   });
                                             // },
                                           ),
+                                        ),
+                                      if (_columnVisibility['ملاحظات']!)
+                                        DataCell(
+                                          Center(child: Text(item.notes)),
                                         ),
                                     ],
                                   );

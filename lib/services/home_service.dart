@@ -1,4 +1,5 @@
 import 'package:attendance_app_training/constants.dart';
+import 'package:attendance_app_training/models/attendance_model.dart';
 import 'package:attendance_app_training/models/drop_down_changed_model.dart';
 import 'package:attendance_app_training/models/drop_downs_model.dart';
 import 'package:attendance_app_training/models/filter_data_model.dart';
@@ -77,6 +78,30 @@ class HomeService {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  // get  Attendance
+  Future<List<AttendanceModel>> getAttandance({
+    required DropDownChangedModel dropDownChangedModel,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '${Constants.baseUrl}${Constants.getAttendance}',
+        queryParameters: dropDownChangedModel.tojson(),
+      );
+
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return (response.data['data'] as List).isEmpty
+            ? []
+            : (response.data['data'] as List)
+                  .map((item) => AttendanceModel.fromJson(item))
+                  .toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
     }
   }
 }

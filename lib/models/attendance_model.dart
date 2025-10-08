@@ -1,4 +1,4 @@
-class FilterDataModel {
+class AttendanceModel {
   final int trainingNumber;
   final int hallNumber;
   final String name;
@@ -9,7 +9,7 @@ class FilterDataModel {
   bool secondPeriod;
   String notes;
 
-  FilterDataModel({
+  AttendanceModel({
     required this.trainingNumber,
     required this.hallNumber,
     required this.name,
@@ -21,21 +21,21 @@ class FilterDataModel {
     required this.notes,
   });
 
-  factory FilterDataModel.fromJson(Map<String, dynamic> json) {
-    return FilterDataModel(
-      trainingNumber: (json['courseNumber'] is int)
-          ? json['courseNumber'] as int
-          : int.tryParse('${json['courseNumber']}') ?? 0,
-      hallNumber: (json['trainingHall'] is int)
-          ? json['trainingHall'] as int
-          : int.tryParse('${json['trainingHall']}') ?? 0,
-      name: json['name'] as String? ?? '',
-      ministryName: json['ministry'] as String? ?? '',
-      partyName: json['organization'] as String? ?? '',
+  factory AttendanceModel.fromJson(Map<String, dynamic> json) {
+    return AttendanceModel(
+      trainingNumber: (json['registrationDetails']['courseNumber'] is int)
+          ? json['registrationDetails']['courseNumber'] as int
+          : int.tryParse('${json['registrationDetails']['courseNumber']}') ?? 0,
+      hallNumber: (json['registrationDetails']['trainingHall'] is int)
+          ? json['registrationDetails']['trainingHall'] as int
+          : int.tryParse('${json['registrationDetails']['trainingHall']}') ?? 0,
+      name: json['registrationDetails']['name'] as String? ?? '',
+      ministryName: json['registrationDetails']['ministry'] as String? ?? '',
+      partyName: json['registrationDetails']['organization'] as String? ?? '',
       nationalId: json['nationalId'] as String? ?? '',
       firstPeriod: json['morningattendacePeriod'] as bool? ?? false,
       secondPeriod: json['nightattendacePeriod'] as bool? ?? false,
-      notes: '', // json['notes'] as String? ?? '',
+      notes: json['notes'] as String? ?? '',
     );
   }
 

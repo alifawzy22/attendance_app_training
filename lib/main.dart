@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.indigo, fontFamily: 'Alexandria'),
       title: "حضور التدريب",
-      home: isLoggedIn ? const HomeView() : const LoginView(),
+      home: /* isLoggedIn*/ true ? const HomeView() : const LoginView(),
     );
   }
 }
