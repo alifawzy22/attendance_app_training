@@ -35,7 +35,7 @@ class FilterDataModel {
       nationalId: json['nationalId'] as String? ?? '',
       firstPeriod: json['morningattendacePeriod'] as bool? ?? false,
       secondPeriod: json['nightattendacePeriod'] as bool? ?? false,
-      notes: '', // json['notes'] as String? ?? '',
+      notes: json['notes'] as String? ?? '',
     );
   }
 

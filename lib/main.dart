@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:attendance_app_training/data_user_info.dart';
 import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'shared.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -17,6 +17,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final token = await getAccessToken();
   final bool isLoggedIn = token != null && token.isNotEmpty;
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.indigo, fontFamily: 'Alexandria'),
       title: "حضور التدريب",
-      home: /* isLoggedIn*/ true ? const HomeView() : const LoginView(),
+      home: isLoggedIn ? const HomeView() : const LoginView(),
     );
   }
 }

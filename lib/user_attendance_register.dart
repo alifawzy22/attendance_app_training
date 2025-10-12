@@ -1,5 +1,4 @@
 import 'package:attendance_app_training/models/attendance_model.dart';
-import 'package:attendance_app_training/models/filter_data_model.dart';
 import 'package:attendance_app_training/services/home_service.dart';
 import 'package:attendance_app_training/shared.dart';
 import 'package:dio/dio.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'login_view.dart';
 import 'models/check_box_attendance_model.dart';
 import 'models/drop_down_changed_model.dart';
+import 'package:intl/intl.dart' as intl;
 
 class UserAttendanceRegister extends StatefulWidget {
   const UserAttendanceRegister({super.key});
@@ -177,7 +177,17 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'التاريخ',
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
                         alignment: Alignment.center,
                         child: Text(
                           'رقم القاعة',
@@ -186,7 +196,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.3,
                         alignment: Alignment.center,
                         child: Text(
                           'رقم الدورة',
@@ -201,7 +211,28 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: 45,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.blue.withValues(alpha: 0.4),
+                            width: 0.5,
+                          ),
+                        ),
+                        // hall Number Dropdown
+                        child: Text(
+                          intl.DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
                         height: 45,
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.symmetric(
@@ -242,7 +273,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                       ),
 
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width * 0.3,
                         height: 45,
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.symmetric(
@@ -343,8 +374,10 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                       isSearchLoading = true;
                                     });
 
-                                    HomeService(dio: Dio())
-                                        .getAttandance(
+                                    List<AttendanceModel> attendanceModelList =
+                                        await HomeService(
+                                          dio: Dio(),
+                                        ).getAttandance(
                                           dropDownChangedModel:
                                               DropDownChangedModel(
                                                 traninigHall: hallNumber,
@@ -353,7 +386,15 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                                 fromDate: null,
                                                 toDate: null,
                                               ),
-                                        )
+                                        );
+
+                                    setState(() {
+                                      tableList = [];
+                                      tableList = attendanceModelList;
+                                      isSearchLoading = false;
+                                    });
+
+                                    /*
                                         .then((model) {
                                           tableList = [];
                                           tableList = model;
@@ -372,6 +413,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                           // }
                                           setState(() {});
                                         });
+                                        */
                                   }
                                 },
                                 child: Text(
