@@ -636,10 +636,16 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                       if (_columnVisibility['ملاحظات']!)
                                         DataCell(
                                           //Center(child: Text(item.notes)),
-                                          TextField(
+                                          TextFormField(
                                             // controller:
                                             //     controllers[index][item
                                             //         .nationalId],
+                                            initialValue:
+                                                item.notes.contains(
+                                                  'Auto-generated',
+                                                )
+                                                ? ''
+                                                : item.notes,
                                             keyboardType:
                                                 TextInputType.multiline,
                                             minLines: 1,

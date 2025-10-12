@@ -678,7 +678,9 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                 columnSpacing: 30,
                                 horizontalMargin: 10,
                                 dividerThickness: 1,
-                                dataRowMaxHeight: 60,
+                                dataRowMinHeight: 60,
+                                dataRowMaxHeight: double.infinity,
+
                                 headingRowColor:
                                     WidgetStateProperty.resolveWith<Color?>(
                                       (Set<WidgetState> states) =>
@@ -825,7 +827,18 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         ),
                                       if (_columnVisibility['ملاحظات']!)
                                         DataCell(
-                                          Center(child: Text(item.notes)),
+                                          Center(
+                                            child: Text(
+                                              softWrap: true,
+                                              item.notes.contains(
+                                                    'Auto-generated',
+                                                  )
+                                                  ? ''
+                                                  : item.notes,
+                                              maxLines: null,
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          ),
                                         ),
                                     ],
                                   );
