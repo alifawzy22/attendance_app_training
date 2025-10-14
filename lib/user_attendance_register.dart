@@ -338,15 +338,19 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                     children: [
                       SizedBox(
                         height: 45,
-                        width: MediaQuery.of(context).size.width * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.15,
                         child: isSearchLoading
                             ? Center(child: CircularProgressIndicator())
                             : ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   visualDensity: VisualDensity.compact,
+                                  fixedSize: Size(
+                                    MediaQuery.of(context).size.width * 0.15,
+                                    45,
+                                  ),
                                   elevation: 0,
                                   backgroundColor: Colors.green,
-                                  padding: EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(4),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -423,7 +427,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                               ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         height: 45,
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.symmetric(
