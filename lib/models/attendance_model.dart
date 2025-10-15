@@ -33,8 +33,8 @@ class AttendanceModel {
       ministryName: json['registrationDetails']['ministry'] as String? ?? '',
       partyName: json['registrationDetails']['organization'] as String? ?? '',
       nationalId: json['nationalId'] as String? ?? '',
-      firstPeriod: json['morningattendacePeriod'] as bool? ?? false,
-      secondPeriod: json['nightattendacePeriod'] as bool? ?? false,
+      firstPeriod: json['morningAttendancePeriod'] as bool? ?? false,
+      secondPeriod: json['nightAttendancePeriod'] as bool? ?? false,
       notes: json['notes'] as String? ?? '',
     );
   }

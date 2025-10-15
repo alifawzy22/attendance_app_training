@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true" />
+    <!-- Allow your API domain -->
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">pmis.pm</domain>
+        <domain includeSubdomains="true">pmis-api-st.digitalegypt.gov.eg</domain>
     </domain-config>
+
+    <!-- Optional: allow all cleartext traffic (not recommended for production) -->
+    <!-- <base-config cleartextTrafficPermitted="true" /> -->
 </network-security-config>
-
-
-
-

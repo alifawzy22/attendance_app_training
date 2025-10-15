@@ -6,8 +6,8 @@ class LoginModel {
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     return LoginModel(
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
+      accessToken: json['data']['accessToken'],
+      refreshToken: json['data']['refreshToken'],
     );
   }
 }
