@@ -17,6 +17,7 @@ class CheckBoxAttendanceModel {
       'morningattendacePeriod': morningattendacePeriod,
       'nightattendacePeriod': nightattendacePeriod,
       'notes': notes,
+      'attendanceDate': DateTime.now().toIso8601String(),
     };
   }
 }
