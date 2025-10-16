@@ -29,8 +29,8 @@ class FilterDataModel {
       hallNumber: (json['trainingHall'] is int)
           ? json['trainingHall'] as int
           : int.tryParse('${json['trainingHall']}') ?? 0,
-      name: json['name'] as String? ?? '',
-      ministryName: json['ministry'] as String? ?? '',
+      name: json['arabicName'] as String? ?? '',
+      ministryName: json['alternativeSpecialization'] as String? ?? '',
       partyName: json['organization'] as String? ?? '',
       nationalId: json['nationalId'] as String? ?? '',
       firstPeriod: json['morningattendacePeriod'] as bool? ?? false,

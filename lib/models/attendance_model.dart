@@ -29,7 +29,7 @@ class AttendanceModel {
       hallNumber: (json['registrationDetails']['trainingHall'] is int)
           ? json['registrationDetails']['trainingHall'] as int
           : int.tryParse('${json['registrationDetails']['trainingHall']}') ?? 0,
-      name: json['registrationDetails']['name'] as String? ?? '',
+      name: json['registrationDetails']['arabicName'] as String? ?? '',
       ministryName: json['registrationDetails']['ministry'] as String? ?? '',
       partyName: json['registrationDetails']['organization'] as String? ?? '',
       nationalId: json['nationalId'] as String? ?? '',
