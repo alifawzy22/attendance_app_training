@@ -1,6 +1,6 @@
 class DropDownsModel {
-  final List<int> trainingsNumber;
-  final List<int> hallNumbers;
+  final List<String> trainingsNumber;
+  final List<String> hallNumbers;
   final List<String> trainingPrograms;
 
   DropDownsModel({
@@ -12,8 +12,8 @@ class DropDownsModel {
   factory DropDownsModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'];
     return DropDownsModel(
-      trainingsNumber: List<int>.from(data['trainingsNumber']),
-      hallNumbers: List<int>.from(data['hallNumbers']),
+      trainingsNumber: List<String>.from(data['trainingsNumber']),
+      hallNumbers: List<String>.from(data['hallNumbers']),
       trainingPrograms: List<String>.from(data['trainingPrograms']),
     );
   }
