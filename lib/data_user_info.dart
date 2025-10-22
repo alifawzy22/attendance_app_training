@@ -151,9 +151,11 @@ class _UserDataInfoState extends State<UserDataInfo> {
           IconButton(
             onPressed: () async {
               await logout();
-              Navigator.pushReplacement(
+
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginView()),
+                (Route<dynamic> route) => false,
               );
             },
             icon: Icon(Icons.logout, color: Colors.black),
@@ -445,7 +447,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2000, 1, 1),
-                            lastDate: DateTime.now(),
+                            lastDate: DateTime(2300, 12, 31),
                             helpText: 'أختر التاريخ',
                             cancelText: 'إلغاء',
                             confirmText: 'موافق',
@@ -568,7 +570,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2000, 1, 1),
-                            lastDate: DateTime.now(),
+                            lastDate: DateTime(2300, 12, 31),
                             helpText: 'أختر التاريخ',
                             cancelText: 'إلغاء',
                             confirmText: 'موافق',

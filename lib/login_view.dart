@@ -1,6 +1,5 @@
 import 'package:attendance_app_training/home_view.dart';
 import 'package:flutter/material.dart';
-import 'data_user_info.dart';
 import '../shared.dart';
 import '../services/auth_service.dart';
 

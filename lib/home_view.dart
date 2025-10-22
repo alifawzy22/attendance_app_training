@@ -25,6 +25,7 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: [
             Spacer(),
+
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
@@ -55,6 +56,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 24),
+
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(

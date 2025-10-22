@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'shared.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -17,8 +15,6 @@ class MyHttpOverrides extends HttpOverrides {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   final token = await getAccessToken();
   final bool isLoggedIn = token != null && token.isNotEmpty;
   HttpOverrides.global = MyHttpOverrides();

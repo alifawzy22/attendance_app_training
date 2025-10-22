@@ -144,9 +144,10 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
           IconButton(
             onPressed: () async {
               await logout();
-              Navigator.pushReplacement(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginView()),
+                (Route<dynamic> route) => false,
               );
             },
             icon: Icon(Icons.logout, color: Colors.black),
