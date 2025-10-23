@@ -32,7 +32,20 @@ class _LoginViewState extends State<LoginView> {
       final loginModel = await _authService.login(username, password);
 
       if (loginModel != null && loginModel.accessToken.isNotEmpty) {
-        await saveLoginState(loginModel.accessToken, loginModel.refreshToken);
+        if (username == 'mo.ibrahim@gmail.com' &&
+            password == 'Mo.ibrahim@123') {
+          await saveLoginState(
+            loginModel.accessToken,
+            loginModel.refreshToken,
+            true,
+          );
+        } else {
+          await saveLoginState(
+            loginModel.accessToken,
+            loginModel.refreshToken,
+            false,
+          );
+        }
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

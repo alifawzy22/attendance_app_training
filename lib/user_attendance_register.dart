@@ -390,6 +390,8 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                                 applicationSystem: appName,
                                                 fromDate: null,
                                                 toDate: null,
+                                                attendanceDate: null,
+                                                nationalID: null,
                                               ),
                                         );
 

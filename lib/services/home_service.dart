@@ -83,12 +83,14 @@ class HomeService {
 
   // get  Attendance
   Future<List<AttendanceModel>> getAttandance({
-    required DropDownChangedModel dropDownChangedModel,
+    required DropDownChangedModel? dropDownChangedModel,
   }) async {
     try {
       final response = await _dio.get(
         '${Constants.baseUrl}${Constants.getAttendance}',
-        queryParameters: dropDownChangedModel.tojson(),
+        queryParameters: dropDownChangedModel == null
+            ? {}
+            : dropDownChangedModel.tojson(),
       );
 
       if (response.statusCode == 200 && response.data['success'] == true) {

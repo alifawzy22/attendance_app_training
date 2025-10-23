@@ -1,10 +1,15 @@
 class AttendanceModel {
-  final int trainingNumber;
-  final int hallNumber;
+  final String trainingNumber;
+  final String hallNumber;
   final String name;
   final String ministryName;
   final String partyName;
   final String nationalId;
+  final String attendanceDate;
+  final String trainingRegistrationId;
+  final String applicationSystem;
+  final String startDate;
+  final String completeDate;
   bool firstPeriod;
   bool secondPeriod;
   String notes;
@@ -16,6 +21,11 @@ class AttendanceModel {
     required this.ministryName,
     required this.partyName,
     required this.nationalId,
+    required this.attendanceDate,
+    required this.trainingRegistrationId,
+    required this.applicationSystem,
+    required this.startDate,
+    required this.completeDate,
     required this.firstPeriod,
     required this.secondPeriod,
     required this.notes,
@@ -23,12 +33,9 @@ class AttendanceModel {
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
     return AttendanceModel(
-      trainingNumber: (json['registrationDetails']['courseNumber'] is int)
-          ? json['registrationDetails']['courseNumber'] as int
-          : int.tryParse('${json['registrationDetails']['courseNumber']}') ?? 0,
-      hallNumber: (json['registrationDetails']['trainingHall'] is int)
-          ? json['registrationDetails']['trainingHall'] as int
-          : int.tryParse('${json['registrationDetails']['trainingHall']}') ?? 0,
+      trainingNumber:
+          json['registrationDetails']['courseNumber'] as String? ?? '',
+      hallNumber: json['registrationDetails']['trainingHall'] as String? ?? '',
       name: json['registrationDetails']['arabicName'] as String? ?? '',
       ministryName: json['registrationDetails']['ministry'] as String? ?? '',
       partyName: json['registrationDetails']['organization'] as String? ?? '',
@@ -36,20 +43,13 @@ class AttendanceModel {
       firstPeriod: json['morningAttendancePeriod'] as bool? ?? false,
       secondPeriod: json['nightAttendancePeriod'] as bool? ?? false,
       notes: json['notes'] as String? ?? '',
+      attendanceDate: json['attendanceDate'] as String? ?? '',
+      trainingRegistrationId: json['trainingRegistrationId'] as String? ?? '',
+      applicationSystem:
+          json['registrationDetails']['applicationSystem'] as String? ?? '',
+      startDate: json['registrationDetails']['startTime'] as String? ?? '',
+      completeDate:
+          json['registrationDetails']['completionTime'] as String? ?? '',
     );
-  }
-
-  toJson() {
-    return {
-      "trainingNumber": trainingNumber,
-      "hallNumber": hallNumber,
-      "name": name,
-      "ministryName": ministryName,
-      "partyName": partyName,
-      "nationalId": nationalId,
-      "firstPeriod": firstPeriod,
-      "secondPeriod": secondPeriod,
-      "notes": notes,
-    };
   }
 }

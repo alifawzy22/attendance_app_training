@@ -1,14 +1,15 @@
 class FilterDataModel {
-  final int trainingNumber;
-  final int hallNumber;
+  final String trainingNumber;
+  final String hallNumber;
   final String name;
   final String ministryName;
   final String partyName;
   final String nationalId;
-  bool firstPeriod;
-  bool secondPeriod;
-  String notes;
-
+  final String phoneNumber;
+  final String applicationSystem;
+  final String email;
+  final String startDate;
+  final String completeDate;
   FilterDataModel({
     required this.trainingNumber,
     required this.hallNumber,
@@ -16,40 +17,26 @@ class FilterDataModel {
     required this.ministryName,
     required this.partyName,
     required this.nationalId,
-    required this.firstPeriod,
-    required this.secondPeriod,
-    required this.notes,
+    required this.phoneNumber,
+    required this.applicationSystem,
+    required this.email,
+    required this.startDate,
+    required this.completeDate,
   });
 
   factory FilterDataModel.fromJson(Map<String, dynamic> json) {
     return FilterDataModel(
-      trainingNumber: (json['courseNumber'] is int)
-          ? json['courseNumber'] as int
-          : int.tryParse('${json['courseNumber']}') ?? 0,
-      hallNumber: (json['trainingHall'] is int)
-          ? json['trainingHall'] as int
-          : int.tryParse('${json['trainingHall']}') ?? 0,
-      name: json['arabicName'] as String? ?? '',
-      ministryName: json['alternativeSpecialization'] as String? ?? '',
-      partyName: json['organization'] as String? ?? '',
-      nationalId: json['nationalId'] as String? ?? '',
-      firstPeriod: json['morningattendacePeriod'] as bool? ?? false,
-      secondPeriod: json['nightattendacePeriod'] as bool? ?? false,
-      notes: json['notes'] as String? ?? '',
+      trainingNumber: json['courseNumber'] ?? '',
+      hallNumber: json['trainingHall'] ?? '',
+      name: json['arabicName'] ?? '',
+      ministryName: json['alternativeSpecialization'] ?? '',
+      partyName: json['specialization'] ?? '',
+      nationalId: json['nationalId'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? '',
+      applicationSystem: json['applicationSystem'] ?? '',
+      email: json['email'] ?? '',
+      startDate: json['startTime'] ?? '',
+      completeDate: json['completionTime'] ?? '',
     );
-  }
-
-  toJson() {
-    return {
-      "trainingNumber": trainingNumber,
-      "hallNumber": hallNumber,
-      "name": name,
-      "ministryName": ministryName,
-      "partyName": partyName,
-      "nationalId": nationalId,
-      "firstPeriod": firstPeriod,
-      "secondPeriod": secondPeriod,
-      "notes": notes,
-    };
   }
 }

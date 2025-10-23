@@ -7,14 +7,14 @@ import 'package:intl/intl.dart' as intl;
 import 'login_view.dart';
 import 'models/drop_down_changed_model.dart';
 
-class UserDataInfo extends StatefulWidget {
-  const UserDataInfo({super.key});
+class UserDetailsInfo extends StatefulWidget {
+  const UserDetailsInfo({super.key});
 
   @override
-  State<UserDataInfo> createState() => _UserDataInfoState();
+  State<UserDetailsInfo> createState() => _UserDetailsInfoState();
 }
 
-class _UserDataInfoState extends State<UserDataInfo> {
+class _UserDetailsInfoState extends State<UserDetailsInfo> {
   String? hallNumber;
   String? appName;
   String? trainingNumber;
@@ -39,9 +39,11 @@ class _UserDataInfoState extends State<UserDataInfo> {
     'الوزارة': true,
     'الجهة': true,
     'الرقم القومي': true,
-    'فترة أولي': true,
-    'فترة ثانية': true,
-    'ملاحظات': true,
+    'رقم الهاتف': true,
+    'المنظومة': true,
+    'الإيميل': true,
+    'تاريخ بداية الدورة': true,
+    'تاريخ نهاية الدورة': true,
   };
 
   void _openColumnSelector() {
@@ -137,7 +139,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "إستعلام حضور التدريب",
+          "إستعلام المتدربين",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -270,6 +272,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         : trainingNumber,
                                     fromDate: fromDate,
                                     toDate: toDate,
+                                    attendanceDate: null,
+                                    nationalID: null,
                                   ),
                                 )
                                 .then((model) {
@@ -332,6 +336,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         : trainingNumber,
                                     fromDate: fromDate,
                                     toDate: toDate,
+                                    attendanceDate: null,
+                                    nationalID: null,
                                   ),
                                 )
                                 .then((model) {
@@ -394,6 +400,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         : trainingNumber,
                                     fromDate: fromDate,
                                     toDate: toDate,
+                                    attendanceDate: null,
+                                    nationalID: null,
                                   ),
                                 )
                                 .then((model) {
@@ -457,10 +465,10 @@ class _UserDataInfoState extends State<UserDataInfo> {
                             initialEntryMode: DatePickerEntryMode.calendar,
                             selectableDayPredicate: (day) {
                               // Disable weekends (Saturday and Sunday)
-                              if (day.weekday == DateTime.friday ||
-                                  day.weekday == DateTime.saturday) {
-                                return false;
-                              }
+                              // if (day.weekday == DateTime.friday ||
+                              //     day.weekday == DateTime.saturday) {
+                              //   return false;
+                              // }
                               return true;
                             },
                           );
@@ -482,6 +490,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         : trainingNumber,
                                     fromDate: fromDate,
                                     toDate: toDate,
+                                    attendanceDate: null,
+                                    nationalID: null,
                                   ),
                                 );
 
@@ -519,11 +529,12 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                   ),
                                 ),
                               ),
-                              CalenderIconButton(
-                                valueChange: (value) {
-                                  toDate = value;
-                                  setState(() {});
-                                },
+                              IconButton(
+                                onPressed: null,
+                                icon: Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.blueGrey,
+                                ),
                               ),
                             ],
                           ),
@@ -549,6 +560,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                       : trainingNumber,
                                   fromDate: fromDate,
                                   toDate: toDate,
+                                  attendanceDate: null,
+                                  nationalID: null,
                                 ),
                               )
                               .then((model) {
@@ -580,10 +593,10 @@ class _UserDataInfoState extends State<UserDataInfo> {
                             initialEntryMode: DatePickerEntryMode.calendar,
                             selectableDayPredicate: (day) {
                               // Disable weekends (Saturday and Sunday)
-                              if (day.weekday == DateTime.friday ||
-                                  day.weekday == DateTime.saturday) {
-                                return false;
-                              }
+                              // if (day.weekday == DateTime.friday ||
+                              //     day.weekday == DateTime.saturday) {
+                              //   return false;
+                              // }
                               return true;
                             },
                           );
@@ -605,6 +618,8 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         : trainingNumber,
                                     fromDate: fromDate,
                                     toDate: toDate,
+                                    attendanceDate: null,
+                                    nationalID: null,
                                   ),
                                 );
 
@@ -642,11 +657,12 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                   ),
                                 ),
                               ),
-                              CalenderIconButton(
-                                valueChange: (value) {
-                                  fromDate = value;
-                                  setState(() {});
-                                },
+                              IconButton(
+                                onPressed: null,
+                                icon: Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.blueGrey,
+                                ),
                               ),
                             ],
                           ),
@@ -732,6 +748,39 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                           MainAxisAlignment.center,
                                       label: Text('الرقم القومي'),
                                     ),
+
+                                  if (_columnVisibility['رقم الهاتف']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('رقم الهاتف'),
+                                    ),
+
+                                  if (_columnVisibility['المنظومة']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('المنظومة'),
+                                    ),
+                                  if (_columnVisibility['الإيميل']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('الإيميل'),
+                                    ),
+                                  if (_columnVisibility['تاريخ بداية الدورة']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('تاريخ بداية الدورة'),
+                                    ),
+                                  if (_columnVisibility['تاريخ نهاية الدورة']!)
+                                    const DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text('تاريخ نهاية الدورة'),
+                                    ),
+                                  /*
                                   if (_columnVisibility['فترة أولي']!)
                                     const DataColumn(
                                       headingRowAlignment:
@@ -751,6 +800,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                           MainAxisAlignment.center,
                                       label: Text('ملاحظات'),
                                     ),
+                                    */
                                 ],
                                 rows: tableList.asMap().entries.map((entry) {
                                   final index = entry.key;
@@ -773,16 +823,12 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                       if (_columnVisibility['رقم الدورة']!)
                                         DataCell(
                                           Center(
-                                            child: Text(
-                                              '${item.trainingNumber}',
-                                            ),
+                                            child: Text(item.trainingNumber),
                                           ),
                                         ),
                                       if (_columnVisibility['رقم القاعة']!)
                                         DataCell(
-                                          Center(
-                                            child: Text('${item.hallNumber}'),
-                                          ),
+                                          Center(child: Text(item.hallNumber)),
                                         ),
                                       if (_columnVisibility['الأسم']!)
                                         DataCell(
@@ -802,6 +848,47 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                         DataCell(
                                           Center(child: Text(item.nationalId)),
                                         ),
+                                      if (_columnVisibility['رقم الهاتف']!)
+                                        DataCell(
+                                          Center(child: Text(item.phoneNumber)),
+                                        ),
+                                      if (_columnVisibility['المنظومة']!)
+                                        DataCell(
+                                          Center(
+                                            child: Text(item.applicationSystem),
+                                          ),
+                                        ),
+                                      if (_columnVisibility['الإيميل']!)
+                                        DataCell(
+                                          Center(child: Text(item.email)),
+                                        ),
+                                      if (_columnVisibility['تاريخ بداية الدورة']!)
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              intl.DateFormat(
+                                                'yyyy-MM-dd',
+                                              ).format(
+                                                DateTime.parse(item.startDate),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      if (_columnVisibility['تاريخ نهاية الدورة']!)
+                                        DataCell(
+                                          Center(
+                                            child: Text(
+                                              intl.DateFormat(
+                                                'yyyy-MM-dd',
+                                              ).format(
+                                                DateTime.parse(
+                                                  item.completeDate,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      /*
                                       if (_columnVisibility['فترة أولي']!)
                                         DataCell(
                                           Checkbox(
@@ -842,6 +929,7 @@ class _UserDataInfoState extends State<UserDataInfo> {
                                             ),
                                           ),
                                         ),
+                                    */
                                     ],
                                   );
                                 }).toList(),
@@ -853,44 +941,6 @@ class _UserDataInfoState extends State<UserDataInfo> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-class CalenderIconButton extends StatelessWidget {
-  final ValueChanged<DateTime?>? valueChange;
-  const CalenderIconButton({super.key, this.valueChange});
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      padding: EdgeInsets.zero,
-      onPressed: () async {
-        await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(Duration(days: 365)),
-          helpText: 'أختر التاريخ',
-          cancelText: 'إلغاء',
-          confirmText: 'موافق',
-          fieldHintText: 'شهر/يوم/سنة',
-          fieldLabelText: 'تاريخ',
-          initialDatePickerMode: DatePickerMode.day,
-          initialEntryMode: DatePickerEntryMode.calendar,
-          selectableDayPredicate: (day) {
-            // Disable weekends (Saturday and Sunday)
-            if (day.weekday == DateTime.friday ||
-                day.weekday == DateTime.saturday) {
-              return false;
-            }
-            return true;
-          },
-        ).then((value) {
-          valueChange?.call(value);
-        });
-      },
-      icon: Icon(Icons.calendar_month),
     );
   }
 }
