@@ -395,11 +395,10 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                               ),
                                         );
 
-                                    setState(() {
-                                      tableList = [];
-                                      tableList = attendanceModelList;
-                                      isSearchLoading = false;
-                                    });
+                                    tableList = [];
+                                    tableList = attendanceModelList;
+                                    isSearchLoading = false;
+                                    setState(() {});
 
                                     /*
                                         .then((model) {
@@ -569,9 +568,9 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                 ],
                                 rows: tableList.asMap().entries.map((entry) {
                                   final index = entry.key;
-                                  final item = entry.value;
 
                                   return DataRow(
+                                    key: ValueKey(tableList[index].nationalId),
                                     color:
                                         WidgetStateProperty.resolveWith<Color?>(
                                           (Set<WidgetState> states) {
@@ -589,41 +588,56 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                         DataCell(
                                           Center(
                                             child: Text(
-                                              '${item.trainingNumber}',
+                                              tableList[index].trainingNumber,
                                             ),
                                           ),
                                         ),
                                       if (_columnVisibility['رقم القاعة']!)
                                         DataCell(
                                           Center(
-                                            child: Text('${item.hallNumber}'),
+                                            child: Text(
+                                              tableList[index].hallNumber,
+                                            ),
                                           ),
                                         ),
                                       if (_columnVisibility['الأسم']!)
                                         DataCell(
-                                          Center(child: Text(item.name)),
+                                          Center(
+                                            child: Text(tableList[index].name),
+                                          ),
                                         ),
                                       if (_columnVisibility['الوزارة']!)
                                         DataCell(
                                           Center(
-                                            child: Text(item.ministryName),
+                                            child: Text(
+                                              tableList[index].ministryName,
+                                            ),
                                           ),
                                         ),
                                       if (_columnVisibility['الجهة']!)
                                         DataCell(
-                                          Center(child: Text(item.partyName)),
+                                          Center(
+                                            child: Text(
+                                              tableList[index].partyName,
+                                            ),
+                                          ),
                                         ),
                                       if (_columnVisibility['الرقم القومي']!)
                                         DataCell(
-                                          Center(child: Text(item.nationalId)),
+                                          Center(
+                                            child: Text(
+                                              tableList[index].nationalId,
+                                            ),
+                                          ),
                                         ),
                                       if (_columnVisibility['فترة أولي']!)
                                         DataCell(
                                           Checkbox(
-                                            value: item.firstPeriod,
+                                            value: tableList[index].firstPeriod,
                                             onChanged: (val) {
                                               setState(() {
-                                                item.firstPeriod = val ?? false;
+                                                tableList[index].firstPeriod =
+                                                    val ?? false;
                                               });
                                             },
                                           ),
@@ -631,10 +645,11 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                       if (_columnVisibility['فترة ثانية']!)
                                         DataCell(
                                           Checkbox(
-                                            value: item.secondPeriod,
+                                            value:
+                                                tableList[index].secondPeriod,
                                             onChanged: (val) {
                                               setState(() {
-                                                item.secondPeriod =
+                                                tableList[index].secondPeriod =
                                                     val ?? false;
                                               });
                                             },
@@ -648,11 +663,11 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                             //     controllers[index][item
                                             //         .nationalId],
                                             initialValue:
-                                                item.notes.contains(
+                                                tableList[index].notes.contains(
                                                   'Auto-generated',
                                                 )
                                                 ? ''
-                                                : item.notes,
+                                                : tableList[index].notes,
                                             keyboardType:
                                                 TextInputType.multiline,
                                             minLines: 1,
@@ -662,7 +677,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                             //new
                                             onChanged: (value) {
                                               setState(() {
-                                                item.notes = value;
+                                                tableList[index].notes = value;
                                               });
                                             },
                                           ),
