@@ -618,7 +618,8 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                         DataCell(
                                           Center(
                                             child: Text(
-                                              tableList[index].partyName,
+                                              tableList[index]
+                                                  .alternativeSpecialization,
                                             ),
                                           ),
                                         ),

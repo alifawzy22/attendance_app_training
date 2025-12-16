@@ -1050,7 +1050,11 @@ class _UserAllDetailsAttendanceState extends State<UserAllDetailsAttendance> {
                                         ),
                                       if (_columnVisibility['الجهة']!)
                                         DataCell(
-                                          Center(child: Text(item.partyName)),
+                                          Center(
+                                            child: Text(
+                                              item.alternativeSpecialization,
+                                            ),
+                                          ),
                                         ),
                                       if (_columnVisibility['الرقم القومي']!)
                                         DataCell(

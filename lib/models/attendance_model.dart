@@ -4,6 +4,7 @@ class AttendanceModel {
   final String name;
   final String ministryName;
   final String partyName;
+  final String alternativeSpecialization;
   final String nationalId;
   final String attendanceDate;
   final String trainingRegistrationId;
@@ -15,6 +16,7 @@ class AttendanceModel {
   String notes;
 
   AttendanceModel({
+    required this.alternativeSpecialization,
     required this.trainingNumber,
     required this.hallNumber,
     required this.name,
@@ -33,12 +35,17 @@ class AttendanceModel {
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
     return AttendanceModel(
+      alternativeSpecialization:
+          json['registrationDetails']['alternativeSpecialization'] as String? ??
+          '',
       trainingNumber:
           json['registrationDetails']['courseNumber'] as String? ?? '',
       hallNumber: json['registrationDetails']['trainingHall'] as String? ?? '',
       name: json['registrationDetails']['arabicName'] as String? ?? '',
       ministryName: json['registrationDetails']['ministry'] as String? ?? '',
-      partyName: json['registrationDetails']['organization'] as String? ?? '',
+      partyName:
+          json['registrationDetails']['alternativeSpecialization'] as String? ??
+          '',
       nationalId: json['nationalId'] as String? ?? '',
       firstPeriod: json['morningAttendancePeriod'] as bool? ?? false,
       secondPeriod: json['nightAttendancePeriod'] as bool? ?? false,
