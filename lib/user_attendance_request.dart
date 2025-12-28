@@ -8,14 +8,14 @@ import 'models/check_box_attendance_model.dart';
 import 'models/drop_down_changed_model.dart';
 import 'package:intl/intl.dart' as intl;
 
-class UserAttendanceRegister extends StatefulWidget {
-  const UserAttendanceRegister({super.key});
+class UserAttendaceRequest extends StatefulWidget {
+  const UserAttendaceRequest({super.key});
 
   @override
-  State<UserAttendanceRegister> createState() => _UserAttendanceRegisterState();
+  State<UserAttendaceRequest> createState() => _UserAttendaceRequestState();
 }
 
-class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
+class _UserAttendaceRequestState extends State<UserAttendaceRequest> {
   String? hallNumber;
   String? appName;
   String? trainingNumber;
@@ -216,24 +216,54 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: 45,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withValues(alpha: 0.3),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.blue.withValues(alpha: 0.4),
-                            width: 0.5,
+                      GestureDetector(
+                        onTap: () async {
+                          DateTime? date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2000, 1, 1),
+                            lastDate: DateTime(2300, 12, 31),
+                            helpText: 'أختر التاريخ',
+                            cancelText: 'إلغاء',
+                            confirmText: 'موافق',
+                            fieldHintText: 'شهر/يوم/سنة',
+                            fieldLabelText: 'تاريخ',
+                            initialDatePickerMode: DatePickerMode.day,
+                            initialEntryMode: DatePickerEntryMode.calendar,
+                            selectableDayPredicate: (day) {
+                              // Disable weekends (Saturday and Sunday)
+                              // if (day.weekday == DateTime.friday ||
+                              //     day.weekday == DateTime.saturday) {
+                              //   return false;
+                              // }
+                              return true;
+                            },
+                          );
+                          if (date != null) {
+                            attendaceDate = intl.DateFormat(
+                              'yyyy-MM-dd',
+                            ).format(date);
+                            setState(() {});
+                          }
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: 45,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
                           ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.blue.withValues(alpha: 0.4),
+                              width: 0.5,
+                            ),
+                          ),
+                          // hall Number Dropdown
+                          child: Text(attendaceDate),
                         ),
-                        // hall Number Dropdown
-                        child: Text(attendaceDate),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.3,
@@ -399,6 +429,12 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                                 nationalID: null,
                                               ),
                                         );
+
+                                    attendanceModelList.removeWhere(
+                                      (e) =>
+                                          e.firstPeriod == true &&
+                                          e.secondPeriod == true,
+                                    );
 
                                     tableList = [];
                                     tableList = attendanceModelList;
@@ -640,12 +676,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                         DataCell(
                                           Checkbox(
                                             value: tableList[index].firstPeriod,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                tableList[index].firstPeriod =
-                                                    val ?? false;
-                                              });
-                                            },
+                                            onChanged: (val) {},
                                           ),
                                         ),
                                       if (_columnVisibility['فترة ثانية']!)
@@ -653,12 +684,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                           Checkbox(
                                             value:
                                                 tableList[index].secondPeriod,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                tableList[index].secondPeriod =
-                                                    val ?? false;
-                                              });
-                                            },
+                                            onChanged: (val) {},
                                           ),
                                         ),
                                       if (_columnVisibility['ملاحظات']!)
@@ -681,11 +707,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                             textDirection: TextDirection.rtl,
 
                                             //new
-                                            onChanged: (value) {
-                                              setState(() {
-                                                tableList[index].notes = value;
-                                              });
-                                            },
+                                            onChanged: null,
                                           ),
                                         ),
                                     ],
@@ -694,90 +716,6 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                               ),
                             ),
                           ),
-                        ),
-                  SizedBox(height: 20),
-
-                  tableList.isEmpty
-                      ? Container()
-                      : Center(
-                          child: isUpdateAttendanceLoading
-                              ? CircularProgressIndicator()
-                              : ElevatedButton(
-                                  onPressed: () async {
-                                    List<Map<String, dynamic>> checkBoxList =
-                                        [];
-
-                                    for (int i = 0; i < tableList.length; i++) {
-                                      checkBoxList.add(
-                                        CheckBoxAttendanceModel(
-                                          nationalId: tableList[i].nationalId,
-                                          morningattendacePeriod:
-                                              tableList[i].firstPeriod,
-                                          nightattendacePeriod:
-                                              tableList[i].secondPeriod,
-                                          notes: tableList[i].notes,
-                                        ).toJson(),
-                                      );
-                                    }
-
-                                    setState(
-                                      () => isUpdateAttendanceLoading = true,
-                                    );
-                                    bool result = await HomeService(dio: Dio())
-                                        .updateAttendance(
-                                          checkBoxAttendanceList: checkBoxList,
-                                        );
-
-                                    if (result) {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Center(
-                                            child: Text('تم الحفظ بنجاح'),
-                                          ),
-                                          backgroundColor: Colors.green,
-                                        ),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Center(
-                                            child: Text(
-                                              'حدث خطأ ما، حاول مرة أخرى',
-                                            ),
-                                          ),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      );
-                                    }
-                                    setState(
-                                      () => isUpdateAttendanceLoading = false,
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: Colors.green,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          MediaQuery.of(context).size.width *
-                                          0.3,
-                                      vertical: 4,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'حفظ',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
                         ),
 
                   SizedBox(height: 24),

@@ -1,5 +1,6 @@
 import 'package:attendance_app_training/shared.dart';
 import 'package:attendance_app_training/user_all_details_attendance.dart';
+import 'package:attendance_app_training/user_attendance_request.dart';
 import 'package:attendance_app_training/user_details_info.dart';
 import 'package:attendance_app_training/user_attendance_register.dart';
 import 'package:flutter/material.dart';
@@ -139,6 +140,37 @@ class _HomeViewState extends State<HomeView> {
                           MaterialPageRoute(
                             builder: (context) =>
                                 const UserAttendanceRegister(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 24),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.green,
+                        padding: EdgeInsets.all(16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        'إستعلام حضور التدريب',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const UserAttendaceRequest(),
                           ),
                         );
                       },
