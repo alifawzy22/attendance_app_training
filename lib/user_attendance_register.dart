@@ -1,3 +1,4 @@
+import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/models/attendance_model.dart';
 import 'package:attendance_app_training/services/home_service.dart';
 import 'package:attendance_app_training/shared.dart';
@@ -716,6 +717,9 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                           nightattendacePeriod:
                                               tableList[i].secondPeriod,
                                           notes: tableList[i].notes,
+                                          date: DateTime.parse(
+                                            attendaceDate,
+                                          ).toIso8601String(),
                                         ).toJson(),
                                       );
                                     }
@@ -737,6 +741,13 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                             child: Text('تم الحفظ بنجاح'),
                                           ),
                                           backgroundColor: Colors.green,
+                                        ),
+                                      );
+
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomeView(),
                                         ),
                                       );
                                     } else {
