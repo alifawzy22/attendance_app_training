@@ -1,4 +1,5 @@
 import 'package:attendance_app_training/constants.dart';
+import 'package:attendance_app_training/core/singleton/dio_client.dart';
 import 'package:attendance_app_training/models/attendance_model.dart';
 import 'package:attendance_app_training/models/drop_down_changed_model.dart';
 import 'package:attendance_app_training/models/drop_downs_model.dart';
@@ -6,25 +7,22 @@ import 'package:attendance_app_training/models/filter_data_model.dart';
 import 'package:dio/dio.dart';
 
 class HomeService {
+  static final HomeService _instance = HomeService._internal();
   final Dio _dio;
 
-  HomeService({Dio? dio})
-    : _dio =
-          dio ??
-          Dio(
-            BaseOptions(
-              baseUrl: Constants.baseUrl,
-              headers: {'Content-Type': 'application/json'},
-            ),
-          );
+  factory HomeService() {
+    return _instance;
+  }
 
-  // Update  Data table
+  HomeService._internal() : _dio = DioClient().dio;
+
+  // Update Data table
   Future<List<FilterDataModel>> updateDataTable({
     required DropDownChangedModel? dropDownChangedModel,
   }) async {
     try {
       final response = await _dio.get(
-        '${Constants.baseUrl}${Constants.updateDataTable}',
+        Constants.updateDataTable,
         queryParameters: dropDownChangedModel == null
             ? {}
             : dropDownChangedModel.tojson(),
@@ -48,7 +46,7 @@ class HomeService {
   Future<DropDownsModel?> getDropDownsData() async {
     try {
       final response = await _dio.get(
-        '${Constants.baseUrl}${Constants.dropDownsUrl}',
+        Constants.dropDownsUrl,
       );
 
       if (response.statusCode == 200 && response.data['success'] == true) {
@@ -67,7 +65,7 @@ class HomeService {
   }) async {
     try {
       final response = await _dio.put(
-        '${Constants.baseUrl}${Constants.checkBoxAttendanceUrl}',
+        Constants.checkBoxAttendanceUrl,
         data: checkBoxAttendanceList,
       );
 
@@ -81,13 +79,13 @@ class HomeService {
     }
   }
 
-  // get  Attendance
+  // get Attendance
   Future<List<AttendanceModel>> getAttandance({
     required DropDownChangedModel? dropDownChangedModel,
   }) async {
     try {
       final response = await _dio.get(
-        '${Constants.baseUrl}${Constants.getAttendance}',
+        Constants.getAttendance,
         queryParameters: dropDownChangedModel == null
             ? {}
             : dropDownChangedModel.tojson(),

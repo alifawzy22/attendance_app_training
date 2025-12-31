@@ -11,9 +11,9 @@ class AttendanceModel {
   final String applicationSystem;
   final String startDate;
   final String completeDate;
-  bool firstPeriod;
-  bool secondPeriod;
-  String notes;
+  final bool firstPeriod;
+  final bool secondPeriod;
+  final String notes;
 
   AttendanceModel({
     required this.alternativeSpecialization,
@@ -32,6 +32,44 @@ class AttendanceModel {
     required this.secondPeriod,
     required this.notes,
   });
+
+  AttendanceModel copyWith({
+    String? trainingNumber,
+    String? hallNumber,
+    String? name,
+    String? ministryName,
+    String? partyName,
+    String? alternativeSpecialization,
+    String? nationalId,
+    String? attendanceDate,
+    String? trainingRegistrationId,
+    String? applicationSystem,
+    String? startDate,
+    String? completeDate,
+    bool? firstPeriod,
+    bool? secondPeriod,
+    String? notes,
+  }) {
+    return AttendanceModel(
+      trainingNumber: trainingNumber ?? this.trainingNumber,
+      hallNumber: hallNumber ?? this.hallNumber,
+      name: name ?? this.name,
+      ministryName: ministryName ?? this.ministryName,
+      partyName: partyName ?? this.partyName,
+      alternativeSpecialization:
+          alternativeSpecialization ?? this.alternativeSpecialization,
+      nationalId: nationalId ?? this.nationalId,
+      attendanceDate: attendanceDate ?? this.attendanceDate,
+      trainingRegistrationId:
+          trainingRegistrationId ?? this.trainingRegistrationId,
+      applicationSystem: applicationSystem ?? this.applicationSystem,
+      startDate: startDate ?? this.startDate,
+      completeDate: completeDate ?? this.completeDate,
+      firstPeriod: firstPeriod ?? this.firstPeriod,
+      secondPeriod: secondPeriod ?? this.secondPeriod,
+      notes: notes ?? this.notes,
+    );
+  }
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
     return AttendanceModel(

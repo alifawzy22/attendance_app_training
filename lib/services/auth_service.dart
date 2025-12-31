@@ -1,16 +1,23 @@
 import 'package:attendance_app_training/constants.dart';
+import 'package:attendance_app_training/core/singleton/dio_client.dart';
 import 'package:attendance_app_training/models/login_model.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
-  final Dio _dio = Dio();
+  static final AuthService _instance = AuthService._internal();
+  final Dio _dio;
+
+  factory AuthService() {
+    return _instance;
+  }
+
+  AuthService._internal() : _dio = DioClient().dio;
 
   Future<LoginModel?> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        '${Constants.baseUrl}${Constants.authUrl}',
+        Constants.authUrl,
         data: {"email": email, "password": password},
-        options: Options(headers: {"Content-Type": "application/json"}),
       );
 
       if (response.statusCode == 200) {
