@@ -1,5 +1,6 @@
 import 'package:attendance_app_training/home_view.dart';
 import 'package:attendance_app_training/models/attendance_model.dart';
+import 'package:attendance_app_training/models/drop_downs_model.dart';
 import 'package:attendance_app_training/services/home_service.dart';
 import 'package:attendance_app_training/shared.dart';
 import 'package:dio/dio.dart';
@@ -361,6 +362,7 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                   ),
                                 ),
                                 onPressed: () async {
+                                  Dio dio = Dio();
                                   if (hallNumber == null ||
                                       trainingNumber == null ||
                                       appName == null) {
@@ -383,9 +385,35 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                       isSearchLoading = true;
                                     });
 
+                                    DropDownsModel? dropDownsModel =
+                                        await HomeService(
+                                          dio: dio,
+                                        ).getDropDownsData();
+
+                                    if (dropDownsModel != null) {
+                                      hallNumbersList = [];
+                                      appNamesList = [];
+                                      trainingNumbersList = [];
+                                      hallNumbersList = dropDownsModel!
+                                          .hallNumbers
+                                          .map((e) => e.toString())
+                                          .toList();
+                                      appNamesList =
+                                          dropDownsModel.trainingPrograms;
+                                      trainingNumbersList = dropDownsModel
+                                          .trainingsNumber
+                                          .map((e) => e.toString())
+                                          .toList();
+                                      attendaceDate =
+                                          intl.DateFormat('yyyy-MM-dd').format(
+                                            DateTime.parse(dropDownsModel.date),
+                                          );
+                                      setState(() {});
+                                    }
+
                                     List<AttendanceModel> attendanceModelList =
                                         await HomeService(
-                                          dio: Dio(),
+                                          dio: dio,
                                         ).getAttandance(
                                           dropDownChangedModel:
                                               DropDownChangedModel(
@@ -405,27 +433,6 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                     tableList = attendanceModelList;
                                     isSearchLoading = false;
                                     setState(() {});
-
-                                    /*
-                                        .then((model) {
-                                          tableList = [];
-                                          tableList = model;
-                                          isSearchLoading = false;
-                                          // Fill Controllers List
-                                          // controllers = [];
-                                          // for (
-                                          //   int i = 0;
-                                          //   i < tableList.length;
-                                          //   i++
-                                          // ) {
-                                          //   controllers.add({
-                                          //     tableList[i].nationalId:
-                                          //         TextEditingController(),
-                                          //   });
-                                          // }
-                                          setState(() {});
-                                        });
-                                        */
                                   }
                                 },
                                 child: Text(
@@ -744,12 +751,9 @@ class _UserAttendanceRegisterState extends State<UserAttendanceRegister> {
                                         ),
                                       );
 
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => HomeView(),
-                                        ),
-                                      );
+                                      setState(() {
+                                        tableList = [];
+                                      });
                                     } else {
                                       ScaffoldMessenger.of(
                                         context,
